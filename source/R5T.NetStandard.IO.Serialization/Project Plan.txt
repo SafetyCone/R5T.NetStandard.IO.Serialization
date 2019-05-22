@@ -1,4 +1,12 @@
-R5T.NetStandard.IO.Serialization - A serialization library.
+R5T.NetStandard.IO.Serialization - A serialization library, for both streams and files.
 
 Goals
 
+
+Design
+
+Data can be serialized in different formats: binary, JSON, or XML.
+
+File serializers for each format use the stream serializer for that format. All serializers can be used statically, or via an instance. All instantiable file serializers derive from the the base FileSerializer type, which just receives a stream serializer instance for the specific format.
+
+JSON serialization uses the Newtonsoft.JSON package. Thought was given as to whether to make a separate package for JSON serialization (since the Newtonsoft.JSON package is not in .NET Standard), but since it's used directly by Microsoft for ASP.NET, it's good enough to be considered part of .NET Standard.

@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace R5T.NetStandard.IO.Serialization
 {
     public static class BinaryFileSerializer
