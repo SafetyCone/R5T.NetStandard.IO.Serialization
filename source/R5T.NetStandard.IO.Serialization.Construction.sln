@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.NetStandard.IO.Serializ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.NetStandard.IO.Types", "..\..\R5T.NetStandard.IO.Types\source\R5T.NetStandard.IO.Types\R5T.NetStandard.IO.Types.csproj", "{D8BBEB66-4774-4899-81B1-270AF607EEF6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Dependencies", "_Dependencies", "{8F480B19-E441-4D5E-9C60-6B3A36DFC95D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8BBEB66-4774-4899-81B1-270AF607EEF6} = {8F480B19-E441-4D5E-9C60-6B3A36DFC95D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82495032-050F-471B-8A8F-9FF3EA6ECB7A}
