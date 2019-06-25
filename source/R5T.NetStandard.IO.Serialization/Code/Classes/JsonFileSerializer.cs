@@ -23,7 +23,7 @@ namespace R5T.NetStandard.IO.Serialization
         }
     }
 
-    public class JsonFileSerializer<T> : FileSerializer<T>
+    public class JsonFileSerializer<T> : StreamFileSerializer<T>
     {
         public JsonFileSerializer()
             : base(new JsonStreamSerializer<T>())

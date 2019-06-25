@@ -24,7 +24,7 @@ namespace R5T.NetStandard.IO.Serialization
     }
 
 
-    public class XmlFileSerializer<T> : FileSerializer<T>
+    public class XmlFileSerializer<T> : StreamFileSerializer<T>
     {
         public XmlFileSerializer()
             : base(new XmlStreamSerializer<T>())
