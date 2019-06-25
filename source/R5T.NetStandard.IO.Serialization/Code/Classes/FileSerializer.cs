@@ -24,31 +24,20 @@ namespace R5T.NetStandard.IO.Serialization
                 streamSerializer.Serialize(fileStream, value);
             }
         }
-    }
 
-
-    /// <summary>
-    /// Instantiable stream-serializer (<see cref="IStreamSerializer{T}"/>) based file serializer.
-    /// </summary>
-    public class FileSerializer<T> : IFileSerializer<T>
-    {
-        private IStreamSerializer<T> StreamSerializer { get; }
-
-
-        public FileSerializer(IStreamSerializer<T> streamSerializer)
+        public static T Deserialize<T>(string filePath, ITextSerializer<T> textSerializer)
         {
-            this.StreamSerializer = streamSerializer;
-        }
+            var streamSerializer = new TextStreamSerializer<T>(textSerializer);
 
-        public T Deserialize(string filePath)
-        {
-            var value = FileSerializer.Deserialize(filePath, this.StreamSerializer);
+            var value = FileSerializer.Deserialize<T>(filePath, streamSerializer);
             return value;
         }
 
-        public void Serialize(string filePath, T obj, bool overwrite = true)
+        public static void Serialize<T>(string filePath, T value, ITextSerializer<T> textSerializer, bool overwrite = true)
         {
-            FileSerializer.Serialize(filePath, obj, this.StreamSerializer, overwrite);
+            var streamSerializer = new TextStreamSerializer<T>(textSerializer);
+
+            FileSerializer.Serialize(filePath, value, streamSerializer, overwrite);
         }
     }
 }
