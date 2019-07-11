@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -74,6 +75,27 @@ namespace R5T.NetStandard.IO.Serialization
                 var xmlSerializer = new XmlSerializer(typeof(T));
 
                 xmlSerializer.Serialize(writer, obj);
+            }
+        }
+
+        /// <summary>
+        /// Writes XML without 
+        /// </summary>
+        public static void SerializeWithoutNamespace<T>(Stream stream, T obj, string defaultXmlNamespace)
+        {
+            using (var writer = StreamWriterHelper.NewLeaveOpen(stream))
+            {
+                var xmlSerializerNamespaces = new XmlSerializerNamespaces();
+                xmlSerializerNamespaces.Add("", defaultXmlNamespace);
+
+                // Work around for XmlSerializer not using the XmlSerializerNamespaces values if a XmlRootAttribute specifies a namespace.
+                var xmlRootAttribute = typeof(T).GetCustomAttributes(typeof(XmlRootAttribute), true).FirstOrDefault() as XmlRootAttribute;
+
+                var xmlSerializer = xmlRootAttribute != default
+                    ? new XmlSerializer(typeof(T), new XmlRootAttribute { ElementName = xmlRootAttribute.ElementName, Namespace = "" }) // Override the namespace of the root element.
+                    : new XmlSerializer(typeof(T));
+
+                xmlSerializer.Serialize(writer, obj, xmlSerializerNamespaces);
             }
         }
     }
