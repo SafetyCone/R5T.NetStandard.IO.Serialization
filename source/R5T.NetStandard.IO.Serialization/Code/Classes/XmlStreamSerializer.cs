@@ -19,6 +19,36 @@ namespace R5T.NetStandard.IO.Serialization
             }
         }
 
+        /// <summary>
+        /// Deserialize XML with unqualified elements (elements not specifying their namespace) to an XML serialization object type that specifies a namespace for its XmlTypeAttribute.
+        /// </summary>
+        /// <remarks>
+        /// Magic incantations adapted from here: https://stackoverflow.com/a/29776266
+        /// </remarks>
+        public static T Deserialize<T>(Stream stream, string defaultXmlNamespace)
+        {
+            var nameTable = new NameTable();
+
+            var xmlNamespaceManager = new XmlNamespaceManager(nameTable);
+            xmlNamespaceManager.AddNamespace(String.Empty, defaultXmlNamespace);
+
+            var xmlParserContext = new XmlParserContext(nameTable, xmlNamespaceManager, null, XmlSpace.Default);
+
+            var xmlReaderSettings = new XmlReaderSettings
+            {
+                ConformanceLevel = ConformanceLevel.Auto,
+            };
+
+            using (var reader = StreamReaderHelper.NewLeaveOpen(stream))
+            using (var xmlReader = XmlReader.Create(reader, xmlReaderSettings, xmlParserContext))
+            {
+                var xmlSerializer = new XmlSerializer(typeof(T));
+
+                var output = (T)xmlSerializer.Deserialize(xmlReader);
+                return output;
+            }
+        }
+
         public static void Serialize<T>(Stream stream, T obj, XmlWriterSettings xmlWriterSettings, XmlSerializer xmlSerializer)
         {
             using (var xmlWriter = XmlWriter.Create(stream, xmlWriterSettings))
