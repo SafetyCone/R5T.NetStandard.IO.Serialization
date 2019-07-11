@@ -79,16 +79,21 @@ namespace R5T.NetStandard.IO.Serialization
         }
 
         /// <summary>
-        /// Writes XML without 
+        /// Writes XML without any namespaces.
         /// </summary>
-        public static void SerializeWithoutNamespace<T>(Stream stream, T obj, string defaultXmlNamespace)
+        public static void SerializeWithoutNamespaces<T>(Stream stream, T obj)
         {
-            var xmlWriterSettings = new XmlWriterSettings
-            {
-                Indent = true,
-            };
+            var xmlWriterSettings = XmlWriterSettingsHelper.GetIndent();
 
-            // Required to suppress the XSI at the start.
+            XmlStreamSerializer.SerializeWithoutNamespaces(stream, obj, xmlWriterSettings);
+        }
+
+        /// <summary>
+        /// Writes XML without any namespaces.
+        /// </summary>
+        public static void SerializeWithoutNamespaces<T>(Stream stream, T obj, XmlWriterSettings xmlWriterSettings)
+        {
+            // Required to suppress the "xmlns:xsi" and "xmlns:xsd" on the root element.
             var xmlSerializerNamespaces = new XmlSerializerNamespaces();
             xmlSerializerNamespaces.Add(String.Empty, String.Empty);
 
