@@ -83,19 +83,22 @@ namespace R5T.NetStandard.IO.Serialization
         /// </summary>
         public static void SerializeWithoutNamespace<T>(Stream stream, T obj, string defaultXmlNamespace)
         {
-            using (var writer = StreamWriterHelper.NewLeaveOpen(stream))
+            var xmlWriterSettings = new XmlWriterSettings
             {
-                var xmlSerializerNamespaces = new XmlSerializerNamespaces();
-                xmlSerializerNamespaces.Add("", defaultXmlNamespace);
+                Indent = true,
+            };
 
-                // Work around for XmlSerializer not using the XmlSerializerNamespaces values if a XmlRootAttribute specifies a namespace.
-                var xmlRootAttribute = typeof(T).GetCustomAttributes(typeof(XmlRootAttribute), true).FirstOrDefault() as XmlRootAttribute;
+            // Required to suppress the XSI at the start.
+            var xmlSerializerNamespaces = new XmlSerializerNamespaces();
+            xmlSerializerNamespaces.Add(String.Empty, String.Empty);
 
-                var xmlSerializer = xmlRootAttribute != default
-                    ? new XmlSerializer(typeof(T), new XmlRootAttribute { ElementName = xmlRootAttribute.ElementName, Namespace = "" }) // Override the namespace of the root element.
-                    : new XmlSerializer(typeof(T));
+            using (var writer = StreamWriterHelper.NewLeaveOpen(stream))
+            using (var xmlWriter = XmlWriter.Create(writer, xmlWriterSettings))
+            using (var namespaceSuppressingWriter = new NamespaceSupressingXmlWriter(xmlWriter)) // Suppresses all element namespaces.
+            {
+                var xmlSerializer = new XmlSerializer(typeof(T));
 
-                xmlSerializer.Serialize(writer, obj, xmlSerializerNamespaces);
+                xmlSerializer.Serialize(namespaceSuppressingWriter, obj, xmlSerializerNamespaces);
             }
         }
     }
