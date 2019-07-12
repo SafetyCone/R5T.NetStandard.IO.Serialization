@@ -50,6 +50,19 @@ namespace R5T.NetStandard.IO.Serialization
             }
         }
 
+        public static T DeserializeWithoutNamespaces<T>(Stream stream)
+        {
+            using (var reader = StreamReaderHelper.NewLeaveOpen(stream))
+            using (var xmlReader = XmlReader.Create(reader))
+            using (var namespaceIgnorantReader = new NamespaceIgnorantXmlReader(xmlReader))
+            {
+                var xmlSerializer = new XmlSerializer(typeof(T));
+
+                var output = (T)xmlSerializer.Deserialize(xmlReader);
+                return output;
+            }
+        }
+
         public static void Serialize<T>(Stream stream, T obj, XmlWriterSettings xmlWriterSettings, XmlSerializer xmlSerializer)
         {
             using (var xmlWriter = XmlWriter.Create(stream, xmlWriterSettings))

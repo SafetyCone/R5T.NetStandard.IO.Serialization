@@ -8,6 +8,10 @@ namespace R5T.NetStandard.IO.Serialization
     /// Suppresses namespace declarations in all XML elements (including the root).
     /// Note, to suppress the "xmlns:xsi" and "xmlns:xsd" on the root element you must also use an XmlSerializerNamespaces instance with an empty default namespace.
     /// </summary>
+    /// <remarks>
+    /// Adapted from: https://stackoverflow.com/a/874344
+    /// See also: https://stackoverflow.com/a/6659714
+    /// </remarks>
     public class NamespaceSupressingXmlWriter : XmlWriterWrapper
     {
         public NamespaceSupressingXmlWriter(XmlWriter output)
