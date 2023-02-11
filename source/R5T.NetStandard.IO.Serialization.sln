@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
-MinimumVisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.NetStandard.IO.Serialization.Construction", "R5T.NetStandard.IO.Serialization.Construction\R5T.NetStandard.IO.Serialization.Construction.csproj", "{1F9E7236-6791-4784-BD8E-AC98826125A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.NetStandard.IO.Serialization", "R5T.NetStandard.IO.Serialization\R5T.NetStandard.IO.Serialization.csproj", "{13E846CF-B8F0-44D6-9B0B-BC30007B72F1}"
@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Dependencies", "_Dependencies", "{8F480B19-E441-4D5E-9C60-6B3A36DFC95D}"
 EndProject
 Global
+	GlobalSection(NestedProjects) = preSolution
+		{D8BBEB66-4774-4899-81B1-270AF607EEF6} = {8F480B19-E441-4D5E-9C60-6B3A36DFC95D}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -60,9 +63,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D8BBEB66-4774-4899-81B1-270AF607EEF6} = {8F480B19-E441-4D5E-9C60-6B3A36DFC95D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82495032-050F-471B-8A8F-9FF3EA6ECB7A}
