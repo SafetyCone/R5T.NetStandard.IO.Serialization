@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\R5T.NetStandard.IO.Serialization\R5T.NetStandard.IO.Serialization.csproj" />
   </ItemGroup>
